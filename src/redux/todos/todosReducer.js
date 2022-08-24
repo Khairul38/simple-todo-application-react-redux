@@ -1,4 +1,5 @@
 import {
+  LOADED,
   ADDED,
   ALLCOMPLETED,
   CLEARCOMPLETED,
@@ -7,28 +8,19 @@ import {
   DELETED,
 } from "./actionTypes";
 
-const initialState = [
-  {
-    id: 1,
-    title: "Learn React JS",
-    completed: true,
-  },
-  {
-    id: 2,
-    title: "Learn Redux",
-    completed: false,
-    color: "red",
-  },
-];
+const initialState = [];
 
 const todosReducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOADED:
+      return action.payload
+
     case ADDED:
       return [
         ...state,
         {
           id: state.length + 1,
-          title: action.payload,
+          text: action.payload,
           completed: false,
         },
       ];

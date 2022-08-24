@@ -1,33 +1,36 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import Cancel from "../assets/images/cancel.png";
-import { toggled, colorSelected, deleted } from "../redux/todos/action";
+// import { deleted } from "../redux/todos/action";
+import deleteTodo from "../redux/todos/thunk/deleteTodo";
+import updateColor from "../redux/todos/thunk/updateColor";
+import updateStatus from "../redux/todos/thunk/updateStatus";
 
 const Todo = ({ todo }) => {
   const dispatch = useDispatch();
-  const { id, title, completed, color } = todo;
+  const { id, text, completed, color } = todo;
 
-  const handleToggleChanged = (todoId) => {
-    dispatch(toggled(todoId));
+  const handleToggleChanged = (todoId, completed) => {
+    dispatch(updateStatus(todoId, completed));
   };
 
   const handleColorChanged = (todoId, color) => {
-    dispatch(colorSelected(todoId, color));
+    dispatch(updateColor(todoId, color));
   };
 
   const handleDelete = (todoId) => {
-    dispatch(deleted(todoId));
+    dispatch(deleteTodo(todoId));
   };
 
   return (
     <div className="flex justify-start items-center p-2 hover:bg-gray-100 hover:transition-all space-x-4 border-b border-gray-400/20 last:border-0">
       <div
-        className={`rounded-full bg-white border-2 border-gray-400 w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 ${
-          completed && "border-green-500 focus-within:border-green-500"
+        className={`relative rounded-full bg-white border-2 w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 ${
+          completed ? "border-green-500" : "border-gray-400"
         }`}
       >
         <input
-          onChange={() => handleToggleChanged(id)}
+          onChange={() => handleToggleChanged(id, completed)}
           checked={completed}
           type="checkbox"
           className="opacity-0 absolute rounded-full"
@@ -43,7 +46,7 @@ const Todo = ({ todo }) => {
       </div>
 
       <div className={`select-none flex-1 ${completed && "line-through"}`}>
-        {title}
+        {text}
       </div>
 
       <div
