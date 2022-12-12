@@ -3,7 +3,7 @@ import { added } from "../action";
 const addTodo = (todoText) => {
   return async (dispatch, getState) => {
     const response = await fetch(
-      "https://fake--json-server.herokuapp.com/todos",
+      "https://fake-product-api-json-server.vercel.app/todos",
       {
         method: "POST",
         body: JSON.stringify({
